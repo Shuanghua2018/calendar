@@ -1,0 +1,16 @@
+.test {
+    width: 200px;
+}
+#ym {
+    display: flex;
+    justify-content: center;
+}
+td.o-current {
+    background-color: red;
+}
+td.selected {
+    color: blue;
+}
+th, td {
+    border: solid 1px gray;
+}
