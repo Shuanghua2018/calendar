@@ -6,17 +6,17 @@ window.onload = function(){
     var curMonth = date.getMonth()+1;
     //显示当年当月
     document.getElementById('current_month').innerHTML = year+'年'+curMonth+'月';
+    //当月1号星期
+    function getCurMonthWeek(year, month){
+        return new Date(year, month, 1).getDay()+1;
+    }
+    function getMaxDayNum(year, month){
+        return new Date(year,month,0).getDate();
+    }
     displayCalendar(year, month, curMonth);
     function displayCalendar(year, month, curMonth){
         //当月天数
         var max = getMaxDayNum(year, curMonth);
-        function getMaxDayNum(year, month){
-            return new Date(year,month,0).getDate();
-        }
-        //当月1号星期
-        function getCurMonthWeek(year, month){
-            return new Date(year, month, 1).getDay()+1;
-        }
         var curWeek = getCurMonthWeek(year, month);
         //日期初始化
         var day = 1;
@@ -28,27 +28,35 @@ window.onload = function(){
         var trElement = document.createElement('tr');
         var tdElement = document.createElement('td');
         var textNode;
+        var currYear = date.getFullYear();
+        var currMonth = date.getMonth();
+        var currDay = date.getDate()+1;
         for(var i=0; i<totaltd; i++){
             var j = parseInt(i+1);
             //遍历所有li元素
-            var liElement = document.getElementsByTagName('li');
-            for(var z=0; z<liElement.length; z++){
-                if(liElement[z].innerHTML==year+'-'+parseInt(month+1)+'-'+day){
-                    tdElement.classList.add('selected');
-                }
-            }
             if(j>=curWeek && j<parseInt(max+curWeek)){
+                var pElement = document.querySelectorAll('.date');
+                for(var z=0; z<pElement.length; z++){
+                    if(new Date(pElement[z].innerHTML).getFullYear() == year && new Date(pElement[z].innerHTML).getMonth() == month && new Date(pElement[z].innerHTML).getDate() == day){
+                        tdElement.classList.add('selected');
+                    }
+                }
                 textNode = document.createTextNode(day);
                 day++;
+                if(currYear==year && currMonth==month && currDay==day){
+                    tdElement.classList.add('o-current');
+                }
+                tdElement.appendChild(textNode);
+                tdElement.onclick = function(){
+                    var currentYM = document.getElementById('current_month').innerHTML;
+                    var currentYear = currentYM.split('年')[0];
+                    var currentMonth = currentYM.split('年')[1].split('月')[0];
+                    var currenDay = this.innerHTML;
+                    console.log(currentYear+'-'+currentMonth+'-'+currenDay);
+                }
             }else{
                 textNode = document.createTextNode('');
-            }
-            tdElement.appendChild(textNode);
-            var currYear = date.getFullYear();
-            var currMonth = date.getMonth();
-            var currDay = date.getDate()+1;
-            if(currYear==year && currMonth==month && currDay==day){
-                tdElement.classList.add('o-current');
+                tdElement.appendChild(textNode);
             }
             trElement.appendChild(tdElement);
             tdElement = document.createElement('td');
@@ -59,7 +67,7 @@ window.onload = function(){
             }
         }
     }
-    document.getElementById('pre').onclick = function(){
+    document.getElementById('preM').onclick = function(){
         var selectedYM = document.getElementById('current_month').innerHTML;
         var year = selectedYM.split('年')[0];
         var month = selectedYM.split('年')[1].split('月')[0];
@@ -75,7 +83,20 @@ window.onload = function(){
         document.getElementById('calendar').innerHTML='';
         displayCalendar(year, month, curMonth);
     }
-    document.getElementById('next').onclick = function(){
+    document.getElementById('preY').onclick = function(){
+        var selectedYM = document.getElementById('current_month').innerHTML;
+        var year = selectedYM.split('年')[0];
+        var month = selectedYM.split('年')[1].split('月')[0];
+        if(year!=1){
+            year -= 1;
+        }
+        document.getElementById('current_month').innerHTML = year+'年'+month+'月';
+        var curMonth = month;
+        month -= 1;
+        document.getElementById('calendar').innerHTML='';
+        displayCalendar(year, month, curMonth);
+    }
+    document.getElementById('nextM').onclick = function(){
         var selectedYM = document.getElementById('current_month').innerHTML;
         var year = selectedYM.split('年')[0];
         var month = selectedYM.split('年')[1].split('月')[0];
@@ -90,5 +111,33 @@ window.onload = function(){
         month -= 1;
         document.getElementById('calendar').innerHTML='';
         displayCalendar(year, month, curMonth);
+    }
+    document.getElementById('nextY').onclick = function(){
+        var selectedYM = document.getElementById('current_month').innerHTML;
+        var year = selectedYM.split('年')[0];
+        var month = selectedYM.split('年')[1].split('月')[0];
+        year = parseInt(year)+1;
+        document.getElementById('current_month').innerHTML = year+'年'+month+'月';
+        var curMonth = month;
+        month -= 1;
+        document.getElementById('calendar').innerHTML='';
+        displayCalendar(year, month, curMonth);
+    }
+    var list = document.getElementById('list');
+    document.getElementById('add').onclick = function(){
+        var date = document.getElementById('time').value;
+        var text = document.getElementById('text').value;
+        var pNewElement = document.createElement('p');
+        var textElementDate = document.createTextNode(date);
+        var textElementText = document.createTextNode(text);
+        pNewElement.appendChild(textElementDate);
+        pNewElement.classList.add('date');
+        var liElement = document.createElement('li');
+        liElement.appendChild(pNewElement);
+        liElement.appendChild(textElementText);
+        list.appendChild(liElement);
+        var day = date.split('-');
+        document.getElementById('calendar').innerHTML = '';
+        displayCalendar(day[0], (day[1]-1), day[1]);
     }
 }
