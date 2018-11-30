@@ -1,5 +1,10 @@
 .test {
-    width: 200px;
+    width: 250px;
+    background-color: gainsboro;
+}
+#list {
+    background-color: antiquewhite;   
+    width: 500px; 
 }
 #ym {
     display: flex;
@@ -13,4 +18,17 @@ td.selected {
 }
 th, td {
     border: solid 1px gray;
+}
+table {
+    margin-left: 23px;
+}
+table thead tr {
+    background-color: aquamarine;
+}
+.date {
+    display: inline;
+    padding-right: 34px;
+}
+.add-area {
+    margin-bottom: 20px;
 }
