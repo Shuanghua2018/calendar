@@ -10,21 +10,28 @@
 </head>
 <body>
     <div class="lists">
-        <ul>
-            <li>2018-11-12</li>
-            <li>2018-11-15</li>
-            <li>2018-11-16</li>
-            <li>2018-11-18</li>
-            <li>2018-11-22</li>
-            <li>2018-11-23</li>
-            <li>2018-11-28</li>
+        <ul id="list">
+            <li><p class="date">2018-11-12</p>test a</li>
+            <li><p class="date">2018-11-15</p>test b</li>
+            <li><p class="date">2018-11-16</p>test c</li>
+            <li><p class="date">2018-11-18</p>test d</li>
+            <li><p class="date">2018-11-22</p>test e</li>
+            <li><p class="date">2018-11-23</p>test f</li>
+            <li><p class="date">2018-11-28</p>test g</li>
         </ul>
+        <div class="add-area">
+            <input type="date" id="time">
+            <input type="text" id="text">
+            <button id="add">Add</button>
+        </div>
     </div>
     <div class="test">
         <div id="ym">
-            <button id="pre">&lt;</button>
+            <button id="preY">Y&lt;</button>
+            <button id="preM">M&lt;</button>
             <p id="current_month"></p>
-            <button id="next">&gt;</button>
+            <button id="nextM">&gt;M</button>
+            <button id="nextY">&gt;Y</button>
         </div>
         <table>
             <thead>
